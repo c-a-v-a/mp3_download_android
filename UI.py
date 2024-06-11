@@ -20,6 +20,7 @@ DB = Database(DATABASE_PATH, MUSIC_LOCATIONS)
 
 
 class ErrorPopup(Popup):
+    """Class representing a popup taking care of showing what errors occured."""
     def __init__(self, **kwargs):
         super(ErrorPopup, self).__init__(**kwargs);
         self.title = 'Error'
@@ -30,11 +31,12 @@ class ErrorPopup(Popup):
         self.add_widget(self.label)
 
     def update_message(self, msg):
+        """Updates popup with the new error message"""
         self.label.text = str(msg)
 
 
-
 class AddOfflinePopup(Popup):
+    """Popup window that allows user to add new offline song to the database."""
     def __init__(self, **kwargs):
         super(AddOfflinePopup, self).__init__(**kwargs)
         self.title = 'Add offline'
@@ -75,6 +77,7 @@ class AddOfflinePopup(Popup):
 
 
 class AddOnlinePopup(Popup):
+    """Popup window that allows user to add new online song to the database."""
     def __init__(self, **kwargs):
         super(AddOnlinePopup, self).__init__(**kwargs)
         self.title = 'Add online'
@@ -112,6 +115,7 @@ class AddOnlinePopup(Popup):
 
 
 class OfflineScreen(Screen):
+    """Screen that shows all offline songs in the database."""
     def __init__(self, **kwargs):
         super(OfflineScreen, self).__init__(**kwargs)
         self.data = []
@@ -123,12 +127,12 @@ class OfflineScreen(Screen):
         
 
         self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                         height=40, background_color=BUTTON_BG)
+                         height=60, background_color=BUTTON_BG)
         self.btn.bind(on_press=self.go_back)
         self.layout.add_widget(self.btn)        
         for item in self.data:
             self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.name}', size_hint_y=None,
-                         height=40, background_color=BUTTON_BG)
+                         height=60, background_color=BUTTON_BG)
             self.layout.add_widget(self.btn)
 
         self.sv = ScrollView()
@@ -139,6 +143,7 @@ class OfflineScreen(Screen):
         self.refresh()
 
     def refresh(self):
+        """Takes care of updating the layout if new song is added to the database."""
         try:
             if self.count == 0:
                 self.count += 1
@@ -150,12 +155,12 @@ class OfflineScreen(Screen):
                 
 
                 self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                                 height=40, background_color=BUTTON_BG)
+                                 height=60, background_color=BUTTON_BG)
                 self.btn.bind(on_press=self.go_back)
                 self.layout.add_widget(self.btn)        
                 for item in self.data:
                     self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.name}', size_hint_y=None,
-                                 height=40, background_color=BUTTON_BG)
+                                 height=60, background_color=BUTTON_BG)
                     self.layout.add_widget(self.btn)
 
                 self.sv.add_widget(self.layout)
@@ -171,6 +176,7 @@ class OfflineScreen(Screen):
 
 
 class OnlineScreen(Screen):
+    """Screen that shows all online songs in the database."""
     def __init__(self, **kwargs):
         super(OnlineScreen, self).__init__(**kwargs)
         self.data = []
@@ -181,12 +187,12 @@ class OnlineScreen(Screen):
         self.layout.bind(minimum_height=self.layout.setter('height'))
         
         self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                         height=40, background_color=BUTTON_BG)
+                         height=60, background_color=BUTTON_BG)
         self.btn.bind(on_press=self.go_back)
         self.layout.add_widget(self.btn)        
         for item in self.data:
             self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.title}', size_hint_y=None,
-                         height=40, background_color=BUTTON_BG)
+                         height=60, background_color=BUTTON_BG)
             self.layout.add_widget(self.btn)
         
         self.sv = ScrollView()
@@ -198,6 +204,7 @@ class OnlineScreen(Screen):
 
 
     def refresh(self):
+        """Takes care of updating the layout if new song is added to the database."""
         try:
             if self.count == 0:
                 self.count += 1
@@ -207,12 +214,12 @@ class OnlineScreen(Screen):
                 self.layout.bind(minimum_height=self.layout.setter('height'))
                 
                 self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                                 height=40, background_color=BUTTON_BG)
+                                 height=60, background_color=BUTTON_BG)
                 self.btn.bind(on_press=self.go_back)
                 self.layout.add_widget(self.btn)        
                 for item in self.data:
                     self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.title}', size_hint_y=None,
-                                 height=40, background_color=BUTTON_BG)
+                                 height=60, background_color=BUTTON_BG)
                     self.layout.add_widget(self.btn)
 
                 self.sv.add_widget(self.layout)
@@ -229,6 +236,7 @@ class OnlineScreen(Screen):
 
 
 class SelectScreen(Screen):
+    """Main application screen. Allows user to pick what they want to do."""
     def __init__(self, **kwargs):
         super(SelectScreen, self).__init__(**kwargs)
         # layouts
@@ -260,10 +268,12 @@ class SelectScreen(Screen):
         self.add_widget(anchor)
 
     def open_offline_popup(self, instance):
+        """Opens a popup that allows user to add new offline song."""
         popup = AddOfflinePopup()
         popup.open()
 
     def open_online_popup(self, instance):
+        """Opens a popup that allows user to add new online song."""
         popup = AddOnlinePopup()
         popup.open()
 
@@ -286,6 +296,7 @@ class MyApp(App):
     def build(self):
         sm = MyScreenManager()
 
+        # Change the bg color
         with sm.canvas.before:
             Color(40/255, 42/255, 54/255, 1) # #282A36
             self.rect = Rectangle(size=Window.size, pos=sm.pos)

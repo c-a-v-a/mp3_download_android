@@ -62,6 +62,9 @@ class Database:
             raise Exception(f'Error. Could not load offline music data.')
 
     def add_offline(self, url: str, path: str = '', name: str = ''):
+        """Adds item to offline list. That means that mp3 files are downloaded
+        from url and then saved on hard drive in the MUSIC_LOCATIONS[0].
+        """
         try:
             p = path
             res = requests.get(url)
@@ -92,6 +95,10 @@ class Database:
             raise Exception(f'Error. Could not download file.')
 
     def add_online(self, url: str, name: str = ''):
+        """Adds items to online list. That means that title is taken from the 
+        request metadata (or function parameters), and with the file url, they
+        are stored in the database json file.
+        """
         try:
             res = requests.get(url)
             item = None 
@@ -111,6 +118,7 @@ class Database:
             raise Exception(f'Error. Could not save to database.')
 
     def add_offline_yt(self, url: str):
+        """Function similar to `add_offline`, but it handles only youtube urls"""
         try:
             options = {
                 'format': 'bestaudio/best',
@@ -138,6 +146,7 @@ class Database:
             raise Exception(f'Error. Could not download file.')
 
     def add_online_yt(self, url: str):
+        """Function similar to `add_online`, but it handles only youtube urls"""
         try:
             options = {
                 'format': 'bestaudio/best',
@@ -156,6 +165,7 @@ class Database:
             raise Exception(f'Error. Could not save to database.')
 
     def _get_name(self, headers: Dict[str, str]) -> str:
+        """Gets song title from request metadata"""
         try:
             return headers['Content-Disposition'].split('filename=')[1].replace('"', '')
         except:
