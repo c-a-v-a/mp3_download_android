@@ -122,17 +122,17 @@ class OfflineScreen(Screen):
         self.count = 0
         self.refresh()
 
-        self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=4, padding=[25,25])
+        self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=10, padding=[25,25])
         self.layout.bind(minimum_height=self.layout.setter('height'))
         
 
         self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                         height=60, background_color=BUTTON_BG)
+                         height=100, background_color=BUTTON_BG)
         self.btn.bind(on_press=self.go_back)
         self.layout.add_widget(self.btn)        
         for item in self.data:
             self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.name}', size_hint_y=None,
-                         height=60, background_color=BUTTON_BG)
+                         height=100, background_color=BUTTON_BG)
             self.layout.add_widget(self.btn)
 
         self.sv = ScrollView()
@@ -150,17 +150,17 @@ class OfflineScreen(Screen):
             else:
                 self.sv.remove_widget(self.layout)
 
-                self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=4, padding=[25,25])
+                self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=10, padding=[25,25])
                 self.layout.bind(minimum_height=self.layout.setter('height'))
                 
 
                 self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                                 height=60, background_color=BUTTON_BG)
+                                 height=100, background_color=BUTTON_BG)
                 self.btn.bind(on_press=self.go_back)
                 self.layout.add_widget(self.btn)        
                 for item in self.data:
                     self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.name}', size_hint_y=None,
-                                 height=60, background_color=BUTTON_BG)
+                                 height=100, background_color=BUTTON_BG)
                     self.layout.add_widget(self.btn)
 
                 self.sv.add_widget(self.layout)
@@ -183,16 +183,16 @@ class OnlineScreen(Screen):
         self.count = 0
         self.refresh()
 
-        self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=4, padding=[25,25])
+        self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=10, padding=[25,25])
         self.layout.bind(minimum_height=self.layout.setter('height'))
         
         self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                         height=60, background_color=BUTTON_BG)
+                         height=100, background_color=BUTTON_BG)
         self.btn.bind(on_press=self.go_back)
         self.layout.add_widget(self.btn)        
         for item in self.data:
             self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.title}', size_hint_y=None,
-                         height=60, background_color=BUTTON_BG)
+                         height=100, background_color=BUTTON_BG)
             self.layout.add_widget(self.btn)
         
         self.sv = ScrollView()
@@ -210,16 +210,16 @@ class OnlineScreen(Screen):
                 self.count += 1
             else:
                 self.sv.remove_widget(self.layout)
-                self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=4, padding=[25,25])
+                self.layout = BoxLayout(orientation='vertical', size_hint_y=None, spacing=10, padding=[25,25])
                 self.layout.bind(minimum_height=self.layout.setter('height'))
                 
                 self.btn = Button(text=f'---BACK---', size_hint_y=None,
-                                 height=60, background_color=BUTTON_BG)
+                                 height=100, background_color=BUTTON_BG)
                 self.btn.bind(on_press=self.go_back)
                 self.layout.add_widget(self.btn)        
                 for item in self.data:
                     self.btn = Button(text=f'{"(A) " if item.is_album else ""}{item.title}', size_hint_y=None,
-                                 height=60, background_color=BUTTON_BG)
+                                 height=100, background_color=BUTTON_BG)
                     self.layout.add_widget(self.btn)
 
                 self.sv.add_widget(self.layout)

@@ -90,7 +90,7 @@ class Database:
                 f.write(res.content)
                 f.close()
 
-            self.offline_items.append(item)
+            self._load_offline()
         except:
             raise Exception(f'Error. Could not download file.')
 
