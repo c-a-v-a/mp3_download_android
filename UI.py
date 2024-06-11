@@ -65,7 +65,7 @@ class AddOfflinePopup(Popup):
         try:
             if not url == '':
                 if 'youtube.com' in url or 'youtu.be' in url:
-                    DB.add_offline_yt(url)
+                    DB.add_offline_yt(url, path, name)
                 else:
                     DB.add_offline(url,path,name)
         except Exception as e:
@@ -103,7 +103,7 @@ class AddOnlinePopup(Popup):
         try:
             if not url == '':
                 if 'youtube.com' in url or 'youtu.be' in url:
-                    DB.add_online_yt(url)
+                    DB.add_online_yt(url, name)
                 else:
                     DB.add_online(url,name)
         except Exception as e:

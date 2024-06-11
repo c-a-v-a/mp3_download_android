@@ -117,7 +117,7 @@ class Database:
         except:
             raise Exception(f'Error. Could not save to database.')
 
-    def add_offline_yt(self, url: str):
+    def add_offline_yt(self, url: str, path: str, name: str):
         """Function similar to `add_offline`, but it handles only youtube urls"""
         try:
             options = {
@@ -126,18 +126,28 @@ class Database:
                 'quiet': True
             }
             video_info = yt_dlp.YoutubeDL(options).extract_info(url=url, download=False)
+            p = path
+
+            if p == '':
+                p = self.offline_locations[0]
 
             if 'entries' in video_info:
-                directory = video_info['title']
+                directory = f"{video_info['title']}"
                 count = 1
 
+                if name != '':
+                    directory = name
+
                 for video in video_info['entries']:
-                    title =  f'{self.offline_locations[0]}{directory}/{count}. {video["title"]}'
+                    title =  f'{p}{directory}/{count}. {video["title"]}'
                     options['outtmpl'] = title + '.mp3'
                     yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
                     count += 1
             else:
-                title = f'{self.offline_locations[0]}{video_info["title"]}'
+                if name != '':
+                    video_info['title'] = name
+
+                title = f'{p}{video_info["title"]}'
                 options['outtmpl'] = title + '.mp3'
                 yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
 
@@ -145,7 +155,7 @@ class Database:
         except:
             raise Exception(f'Error. Could not download file.')
 
-    def add_online_yt(self, url: str):
+    def add_online_yt(self, url: str, name: str):
         """Function similar to `add_online`, but it handles only youtube urls"""
         try:
             options = {
@@ -156,6 +166,9 @@ class Database:
             video_info = yt_dlp.YoutubeDL(options).extract_info(url=url, download=False)
             title = video_info['title']
             is_album = 'entries' in video_info
+
+            if name != '':
+                title = name
 
             item = OnlineItem({'title': title, 'url': url, 'is_album': str(is_album)})
             
