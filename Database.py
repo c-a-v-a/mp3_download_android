@@ -124,9 +124,10 @@ class Database:
             if name == '':
                 item = Item(p, self._get_name(res.headers), False)
             else:
-                item = Item(p, f'{name}.mp3', False)
+                filename = self._sanitize(f'{name}.mp3')
+                item = Item(p, filename, False)
 
-            with open(f'{p}{item.name}', 'wb') as f:
+            with open(filename, 'wb') as f:
                 f.write(res.content)
                 f.close()
 
@@ -171,7 +172,7 @@ class Database:
                     directory += '/'
 
                 for e in video_info['entries']:
-                    options['outtmpl'] = f'{p}{directory}{count}. {e["title"]}.mp3'
+                    options['outtmpl'] = self._sanitize(f'{p}{directory}{count}. {e["title"]}.mp3')
                     yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
                     count += 1
             else:
@@ -180,7 +181,7 @@ class Database:
                 if '.mp3' not in n:
                     n += '.mp3'
 
-                options['outtmpl'] =  f'{p}{n}'
+                options['outtmpl'] =  self._sanitize(f'{p}{n}')
                 yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
 
             self._load_music()
@@ -204,3 +205,26 @@ class Database:
             return headers['Content-Disposition'].split('filename=')[1].replace('"', '')
         except:
             return f''
+
+    def _sanitize(self, name: str) -> str:
+        """
+        Sanitizes the filename, so that there are no problematic characters in
+        the filename.
+
+        Parameters
+        ----------
+        name : str
+            a filename that needs to be sanitized
+
+        Returns
+        -------
+        A sanitized name
+        """
+        bad_chars = "\\?%*:|\"<>"
+        sanitized = ""
+
+        for c in name:
+            if not c in bad_chars:
+                sanitized += c
+
+        return sanitized
