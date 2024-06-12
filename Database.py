@@ -1,124 +1,159 @@
 import json
 import requests
 import yt_dlp
-from os import listdir, path
+import os
 from typing import List, Dict
 
-from MusicItems import OnlineItem, OfflineItem
-from Preflight import DATABASE_PATH, MUSIC_LOCATIONS
+from Item import Item
 
 class Database:
-    """Class representing a container for all saved pieces of music.
-
-    Properties:
-    online_items -- music that is not saved locally on the device; only its 
-    title and url is saved in database file.
-    offline_items -- music that is saved locally on the device
     """
-    def __init__(self, online_location: str, offline_locations: List[str]):
-        self.online_items: List[OnlineItem] = []
-        self.offline_items: List[OfflineItem] = []
-        self.online_location: str = online_location
-        self.offline_locations: List[str] = offline_locations
+    A class that represents a music database.
 
-        self._load_online()
-        self._load_offline()
+    Attributes
+    ----------
+    items : List[Item]
+        a list of all music items (songs or albums) that are currently saved in
+        the database
+    location : str
+        a location where database items are stored, passed as a argument to 
+        constructor (default 'music/')
 
-    def save_online(self):
-        """Save online_items array into json file on given location"""
-        try:
-            dicts = list(map(lambda x: x.__dict__, self.online_items))
-            file = open(self.online_location, 'w')
-            json.dump(dicts, file, indent=4)
-            file.close()
-        except:
-            raise Exception(f'Error. Could not save data.')
+    Methods
+    -------
+    add(url, path='', name='')
+        Downloads music file (or files when working with youtube playlists)
+        from url, saves it in database location, and appends it to `items`.
+    """
+    def __init__(self, location: str = 'music/'):
+        """
+        Constructs a database on given location.
 
-    def _load_online(self):
-        """Loads saved online music items from specified json file"""
-        try:
-            file = open(self.online_location, 'r')
-            dicts = json.load(file)
-            self.online_items = list(map(lambda x: OnlineItem(x), dicts))
-            file.close()
-        except:
-            raise Exception(f'Error. Could not load online music data.')
+        Parameters
+        ----------
+        location : str
+            location of the database (by extension, a location where
+            downloaded files are going to be saved by default
+        """
+        self.items: List[Item] = []
+        self.location = location
 
-    def _load_offline(self):
-        """Loads saved offline music items from specified locations"""
-        try:
-            contents = list(map(lambda x: listdir(x), self.offline_locations))
-            with_prefix = list(zip(self.offline_locations, contents))
+        if not os.path.isdir(self.location):
+            os.mkdir(location)
 
-            self.offline_items = []
-            
-            for x in with_prefix:
-                location = x[0]
-                names = x[1]
+        self._load_music()
 
-                for name in names:
-                    self.offline_items.append(OfflineItem(location, name, path.isdir(f'{location}{name}')))
-        except:
-            raise Exception(f'Error. Could not load offline music data.')
+    def add(self, url: str, path: str = '', name: str = ''):
+        """
+        Downloads song from given url, and saves it to the database.
 
-    def add_offline(self, url: str, path: str = '', name: str = ''):
-        """Adds item to offline list. That means that mp3 files are downloaded
-        from url and then saved on hard drive in the MUSIC_LOCATIONS[0].
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it's
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
         """
         try:
-            p = path
+            if 'youtube.com' in url or 'youtu.be' in url:
+                self._add_music_yt(url, path, name)
+            else:
+                self._add_music(url, path, name)
+        except:
+            raise Exception(f'Error. Could not download a file.')
+
+    def _load_music(self):
+        """
+        Loads music from the database `location` into database `items` attribute.
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        """
+        try:
+            self.items = []
+            content = os.listdir(self.location)
+
+            for x in content:
+                self.items.append(Item(self.location, x, os.path.isdir(f'{self.location}{x}')))
+        except:
+            raise Exception(f'Error. Could not load music data.')
+
+    def _add_music(self, url: str, path: str = '', name: str = ''):
+        """
+        Adds music from the non youtube url to the database.
+
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it's
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        """
+        try:
+            p = path if path != '' else self.location
+            item = None
+
+            if p[-1] != '/':
+                p += '/'
+
             res = requests.get(url)
-            item = None 
-
-            if p == '':
-                p = self.offline_locations[0]
-
-            filename = p
 
             if res.status_code != 200 or 'audio' not in res.headers['Content-Type']:
-                raise Exception(f'Error. Could not download file.')
-            
-            if name == '':
-                n = self._get_name(res.headers)
-                filename += n
-                item = OfflineItem(p, n, False)
-            else:
-                filename += f'{name}.mp3'
-                item = OfflineItem(p, f'{name}.mp3', False)
+                raise Exception(f'Error. Could not download a file.')
 
-            with open(filename, 'wb') as f:
+            if name == '':
+                item = Item(p, self._get_name(res.headers), False)
+            else:
+                item = Item(p, f'{name}.mp3', False)
+
+            with open(f'{p}{item.name}', 'wb') as f:
                 f.write(res.content)
                 f.close()
 
-            self._load_offline()
+            self._load_music()
         except:
-            raise Exception(f'Error. Could not download file.')
+            raise Exception(f'Error. Could not download a file.')
 
-    def add_online(self, url: str, name: str = ''):
-        """Adds items to online list. That means that title is taken from the 
-        request metadata (or function parameters), and with the file url, they
-        are stored in the database json file.
+    def _add_music_yt(self, url: str, path: str = '', name: str = ''):
         """
-        try:
-            res = requests.get(url)
-            item = None 
+        Adds music from the youtube url to the database.
 
-            if res.status_code != 200 or 'audio' not in res.headers['Content-Type']:
-                raise Exception(f'Error. Could not download file.')
-            
-            if name == '':
-                n = self._get_name(res.headers)
-                item = OnlineItem({'title': n, 'url': url, 'is_album': 'False'})
-            else:
-                item = OnlineItem({'title': name, 'url': url, 'is_album': 'False'})
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it's
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
 
-            self.online_items.append(item)
-            self.save_online()
-        except:
-            raise Exception(f'Error. Could not save to database.')
-
-    def add_offline_yt(self, url: str, path: str, name: str):
-        """Function similar to `add_offline`, but it handles only youtube urls"""
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        """
         try:
             options = {
                 'format': 'bestaudio/best',
@@ -126,59 +161,45 @@ class Database:
                 'quiet': True
             }
             video_info = yt_dlp.YoutubeDL(options).extract_info(url=url, download=False)
-            p = path
-
-            if p == '':
-                p = self.offline_locations[0]
+            p = path if path != '' else self.location
 
             if 'entries' in video_info:
-                directory = f"{video_info['title']}"
+                directory = name if name != '' else video_info['title']
                 count = 1
 
-                if name != '':
-                    directory = name
+                if directory[-1] != '/':
+                    directory += '/'
 
-                for video in video_info['entries']:
-                    title =  f'{p}{directory}/{count}. {video["title"]}'
-                    options['outtmpl'] = title + '.mp3'
+                for e in video_info['entries']:
+                    options['outtmpl'] = f'{p}{directory}{count}. {e["title"]}'
                     yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
                     count += 1
             else:
-                if name != '':
-                    video_info['title'] = name
+                n = name if name != '' else video_info['title']
 
-                title = f'{p}{video_info["title"]}'
-                options['outtmpl'] = title + '.mp3'
+                if '.mp3' not in n:
+                    n += '.mp3'
+
+                options['outtmpl'] =  f'{p}{n}'
                 yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
 
-            self._load_offline()
+            self._load_music()
         except:
             raise Exception(f'Error. Could not download file.')
 
-    def add_online_yt(self, url: str, name: str):
-        """Function similar to `add_online`, but it handles only youtube urls"""
-        try:
-            options = {
-                'format': 'bestaudio/best',
-                'keepvideo': False,
-                'quiet': True
-            }
-            video_info = yt_dlp.YoutubeDL(options).extract_info(url=url, download=False)
-            title = video_info['title']
-            is_album = 'entries' in video_info
-
-            if name != '':
-                title = name
-
-            item = OnlineItem({'title': title, 'url': url, 'is_album': str(is_album)})
-            
-            self.online_items.append(item)
-            self.save_online()
-        except:
-            raise Exception(f'Error. Could not save to database.')
-
     def _get_name(self, headers: Dict[str, str]) -> str:
-        """Gets song title from request metadata"""
+        """
+        Gets music file name from the requests headers.
+
+        Parameters
+        ----------
+        headers : Dict[str, str]
+            a dictionary of http headers
+
+        Returns
+        -------
+        A name of the song. 
+        """
         try:
             return headers['Content-Disposition'].split('filename=')[1].replace('"', '')
         except:

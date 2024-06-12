@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>Database API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>Database</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+import requests
+import yt_dlp
+import os
+from typing import List, Dict
+
+from Item import Item
+
+class Database:
+    &#34;&#34;&#34;
+    A class that represents a music database.
+
+    Attributes
+    ----------
+    items : List[Item]
+        a list of all music items (songs or albums) that are currently saved in
+        the database
+    location : str
+        a location where database items are stored, passed as a argument to 
+        constructor (default &#39;music/&#39;)
+
+    Methods
+    -------
+    add(url, path=&#39;&#39;, name=&#39;&#39;)
+        Downloads music file (or files when working with youtube playlists)
+        from url, saves it in database location, and appends it to `items`.
+    &#34;&#34;&#34;
+    def __init__(self, location: str = &#39;music/&#39;):
+        &#34;&#34;&#34;
+        Constructs a database on given location.
+
+        Parameters
+        ----------
+        location : str
+            location of the database (by extension, a location where
+            downloaded files are going to be saved by default
+        &#34;&#34;&#34;
+        self.items: List[Item] = []
+        self.location = location
+
+        if not os.path.isdir(self.location):
+            os.mkdir(location)
+
+        self._load_music()
+
+    def add(self, url: str, path: str = &#39;&#39;, name: str = &#39;&#39;):
+        &#34;&#34;&#34;
+        Downloads song from given url, and saves it to the database.
+
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it&#39;s
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            if &#39;youtube.com&#39; in url or &#39;youtu.be&#39; in url:
+                self._add_music_yt(url, path, name)
+            else:
+                self._add_music(url, path, name)
+        except:
+            raise Exception(f&#39;Error. Could not download a file.&#39;)
+
+    def _load_music(self):
+        &#34;&#34;&#34;
+        Loads music from the database `location` into database `items` attribute.
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            self.items = []
+            content = os.listdir(self.location)
+
+            for x in content:
+                self.items.append(Item(self.location, x, os.path.isdir(f&#39;{self.location}{x}&#39;)))
+        except:
+            raise Exception(f&#39;Error. Could not load music data.&#39;)
+
+    def _add_music(self, url: str, path: str = &#39;&#39;, name: str = &#39;&#39;):
+        &#34;&#34;&#34;
+        Adds music from the non youtube url to the database.
+
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it&#39;s
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            p = path if path != &#39;&#39; else self.location
+            item = None
+
+            if p[-1] != &#39;/&#39;:
+                p += &#39;/&#39;
+
+            res = requests.get(url)
+
+            if res.status_code != 200 or &#39;audio&#39; not in res.headers[&#39;Content-Type&#39;]:
+                raise Exception(f&#39;Error. Could not download a file.&#39;)
+
+            if name == &#39;&#39;:
+                item = Item(p, self._get_name(res.headers), False)
+            else:
+                item = Item(p, f&#39;{name}.mp3&#39;, False)
+
+            with open(f&#39;{p}{item.name}&#39;, &#39;wb&#39;) as f:
+                f.write(res.content)
+                f.close()
+
+            self._load_music()
+        except:
+            raise Exception(f&#39;Error. Could not download a file.&#39;)
+
+    def _add_music_yt(self, url: str, path: str = &#39;&#39;, name: str = &#39;&#39;):
+        &#34;&#34;&#34;
+        Adds music from the youtube url to the database.
+
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it&#39;s
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            options = {
+                &#39;format&#39;: &#39;bestaudio/best&#39;,
+                &#39;keepvideo&#39;: False,
+                &#39;quiet&#39;: True
+            }
+            video_info = yt_dlp.YoutubeDL(options).extract_info(url=url, download=False)
+            p = path if path != &#39;&#39; else self.location
+
+            if &#39;entries&#39; in video_info:
+                directory = name if name != &#39;&#39; else video_info[&#39;title&#39;]
+                count = 1
+
+                if directory[-1] != &#39;/&#39;:
+                    directory += &#39;/&#39;
+
+                for e in video_info[&#39;entries&#39;]:
+                    options[&#39;outtmpl&#39;] = f&#39;{p}{directory}{count}. {e[&#34;title&#34;]}&#39;
+                    yt_dlp.YoutubeDL(options).download([video_info[&#39;webpage_url&#39;]])
+                    count += 1
+            else:
+                n = name if name != &#39;&#39; else video_info[&#39;title&#39;]
+
+                if &#39;.mp3&#39; not in n:
+                    n += &#39;.mp3&#39;
+
+                options[&#39;outtmpl&#39;] =  f&#39;{p}{n}&#39;
+                yt_dlp.YoutubeDL(options).download([video_info[&#39;webpage_url&#39;]])
+
+            self._load_music()
+        except:
+            raise Exception(f&#39;Error. Could not download file.&#39;)
+
+    def _get_name(self, headers: Dict[str, str]) -&gt; str:
+        &#34;&#34;&#34;
+        Gets music file name from the requests headers.
+
+        Parameters
+        ----------
+        headers : Dict[str, str]
+            a dictionary of http headers
+
+        Returns
+        -------
+        A name of the song. 
+        &#34;&#34;&#34;
+        try:
+            return headers[&#39;Content-Disposition&#39;].split(&#39;filename=&#39;)[1].replace(&#39;&#34;&#39;, &#39;&#39;)
+        except:
+            return f&#39;&#39;</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="Database.Database"><code class="flex name class">
+<span>class <span class="ident">Database</span></span>
+<span>(</span><span>location: str = 'music/')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class that represents a music database.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>items</code></strong> :&ensp;<code>List[Item]</code></dt>
+<dd>a list of all music items (songs or albums) that are currently saved in
+the database</dd>
+<dt><strong><code>location</code></strong> :&ensp;<code>str</code></dt>
+<dd>a location where database items are stored, passed as a argument to
+constructor (default 'music/')</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>add(url, path='', name='')
+Downloads music file (or files when working with youtube playlists)
+from url, saves it in database location, and appends it to <code>items</code>.</p>
+<p>Constructs a database on given location.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>location</code></strong> :&ensp;<code>str</code></dt>
+<dd>location of the database (by extension, a location where
+downloaded files are going to be saved by default</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Database:
+    &#34;&#34;&#34;
+    A class that represents a music database.
+
+    Attributes
+    ----------
+    items : List[Item]
+        a list of all music items (songs or albums) that are currently saved in
+        the database
+    location : str
+        a location where database items are stored, passed as a argument to 
+        constructor (default &#39;music/&#39;)
+
+    Methods
+    -------
+    add(url, path=&#39;&#39;, name=&#39;&#39;)
+        Downloads music file (or files when working with youtube playlists)
+        from url, saves it in database location, and appends it to `items`.
+    &#34;&#34;&#34;
+    def __init__(self, location: str = &#39;music/&#39;):
+        &#34;&#34;&#34;
+        Constructs a database on given location.
+
+        Parameters
+        ----------
+        location : str
+            location of the database (by extension, a location where
+            downloaded files are going to be saved by default
+        &#34;&#34;&#34;
+        self.items: List[Item] = []
+        self.location = location
+
+        if not os.path.isdir(self.location):
+            os.mkdir(location)
+
+        self._load_music()
+
+    def add(self, url: str, path: str = &#39;&#39;, name: str = &#39;&#39;):
+        &#34;&#34;&#34;
+        Downloads song from given url, and saves it to the database.
+
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it&#39;s
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            if &#39;youtube.com&#39; in url or &#39;youtu.be&#39; in url:
+                self._add_music_yt(url, path, name)
+            else:
+                self._add_music(url, path, name)
+        except:
+            raise Exception(f&#39;Error. Could not download a file.&#39;)
+
+    def _load_music(self):
+        &#34;&#34;&#34;
+        Loads music from the database `location` into database `items` attribute.
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            self.items = []
+            content = os.listdir(self.location)
+
+            for x in content:
+                self.items.append(Item(self.location, x, os.path.isdir(f&#39;{self.location}{x}&#39;)))
+        except:
+            raise Exception(f&#39;Error. Could not load music data.&#39;)
+
+    def _add_music(self, url: str, path: str = &#39;&#39;, name: str = &#39;&#39;):
+        &#34;&#34;&#34;
+        Adds music from the non youtube url to the database.
+
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it&#39;s
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            p = path if path != &#39;&#39; else self.location
+            item = None
+
+            if p[-1] != &#39;/&#39;:
+                p += &#39;/&#39;
+
+            res = requests.get(url)
+
+            if res.status_code != 200 or &#39;audio&#39; not in res.headers[&#39;Content-Type&#39;]:
+                raise Exception(f&#39;Error. Could not download a file.&#39;)
+
+            if name == &#39;&#39;:
+                item = Item(p, self._get_name(res.headers), False)
+            else:
+                item = Item(p, f&#39;{name}.mp3&#39;, False)
+
+            with open(f&#39;{p}{item.name}&#39;, &#39;wb&#39;) as f:
+                f.write(res.content)
+                f.close()
+
+            self._load_music()
+        except:
+            raise Exception(f&#39;Error. Could not download a file.&#39;)
+
+    def _add_music_yt(self, url: str, path: str = &#39;&#39;, name: str = &#39;&#39;):
+        &#34;&#34;&#34;
+        Adds music from the youtube url to the database.
+
+        Parameters
+        ----------
+        url : str
+            url of the song that needs to be downloaded
+        path : str
+            path to the directory in which song should be saved, when it&#39;s
+            not an empty string, it overrides default database location
+        name : str
+            custom name for downloaded song, a song will be saved under
+            that name
+
+        Raises
+        ------
+        A custom exception that is used in the main program as an error message
+        and prevents the whole program from crashing.
+        &#34;&#34;&#34;
+        try:
+            options = {
+                &#39;format&#39;: &#39;bestaudio/best&#39;,
+                &#39;keepvideo&#39;: False,
+                &#39;quiet&#39;: True
+            }
+            video_info = yt_dlp.YoutubeDL(options).extract_info(url=url, download=False)
+            p = path if path != &#39;&#39; else self.location
+
+            if &#39;entries&#39; in video_info:
+                directory = name if name != &#39;&#39; else video_info[&#39;title&#39;]
+                count = 1
+
+                if directory[-1] != &#39;/&#39;:
+                    directory += &#39;/&#39;
+
+                for e in video_info[&#39;entries&#39;]:
+                    options[&#39;outtmpl&#39;] = f&#39;{p}{directory}{count}. {e[&#34;title&#34;]}&#39;
+                    yt_dlp.YoutubeDL(options).download([video_info[&#39;webpage_url&#39;]])
+                    count += 1
+            else:
+                n = name if name != &#39;&#39; else video_info[&#39;title&#39;]
+
+                if &#39;.mp3&#39; not in n:
+                    n += &#39;.mp3&#39;
+
+                options[&#39;outtmpl&#39;] =  f&#39;{p}{n}&#39;
+                yt_dlp.YoutubeDL(options).download([video_info[&#39;webpage_url&#39;]])
+
+            self._load_music()
+        except:
+            raise Exception(f&#39;Error. Could not download file.&#39;)
+
+    def _get_name(self, headers: Dict[str, str]) -&gt; str:
+        &#34;&#34;&#34;
+        Gets music file name from the requests headers.
+
+        Parameters
+        ----------
+        headers : Dict[str, str]
+            a dictionary of http headers
+
+        Returns
+        -------
+        A name of the song. 
+        &#34;&#34;&#34;
+        try:
+            return headers[&#39;Content-Disposition&#39;].split(&#39;filename=&#39;)[1].replace(&#39;&#34;&#39;, &#39;&#39;)
+        except:
+            return f&#39;&#39;</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="Database.Database.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, url: str, path: str = '', name: str = '')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Downloads song from given url, and saves it to the database.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code></dt>
+<dd>url of the song that needs to be downloaded</dd>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to the directory in which song should be saved, when it's
+not an empty string, it overrides default database location</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>custom name for downloaded song, a song will be saved under
+that name</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>A custom exception that is used in the main program as an error message</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>and prevents the whole program from crashing.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, url: str, path: str = &#39;&#39;, name: str = &#39;&#39;):
+    &#34;&#34;&#34;
+    Downloads song from given url, and saves it to the database.
+
+    Parameters
+    ----------
+    url : str
+        url of the song that needs to be downloaded
+    path : str
+        path to the directory in which song should be saved, when it&#39;s
+        not an empty string, it overrides default database location
+    name : str
+        custom name for downloaded song, a song will be saved under
+        that name
+
+    Raises
+    ------
+    A custom exception that is used in the main program as an error message
+    and prevents the whole program from crashing.
+    &#34;&#34;&#34;
+    try:
+        if &#39;youtube.com&#39; in url or &#39;youtu.be&#39; in url:
+            self._add_music_yt(url, path, name)
+        else:
+            self._add_music(url, path, name)
+    except:
+        raise Exception(f&#39;Error. Could not download a file.&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="Database.Database" href="#Database.Database">Database</a></code></h4>
+<ul class="">
+<li><code><a title="Database.Database.add" href="#Database.Database.add">add</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
