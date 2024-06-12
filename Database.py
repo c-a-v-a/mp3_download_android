@@ -171,7 +171,7 @@ class Database:
                     directory += '/'
 
                 for e in video_info['entries']:
-                    options['outtmpl'] = f'{p}{directory}{count}. {e["title"]}'
+                    options['outtmpl'] = f'{p}{directory}{count}. {e["title"]}.mp3'
                     yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
                     count += 1
             else:
