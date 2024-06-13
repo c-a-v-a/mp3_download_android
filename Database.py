@@ -111,6 +111,7 @@ class Database:
         """
         try:
             p = path if path != '' else self.location
+            filename = ""
             item = None
 
             if p[-1] != '/':
@@ -122,12 +123,13 @@ class Database:
                 raise Exception(f'Error. Could not download a file.')
 
             if name == '':
-                item = Item(p, self._get_name(res.headers), False)
+                filename = self._sanitize(self._get_name(res.headers))
+                item = Item(p, filename, False)
             else:
                 filename = self._sanitize(f'{name}.mp3')
                 item = Item(p, filename, False)
 
-            with open(filename, 'wb') as f:
+            with open(f'{p}{filename}', 'wb') as f:
                 f.write(res.content)
                 f.close()
 
