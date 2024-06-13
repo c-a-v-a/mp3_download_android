@@ -166,6 +166,9 @@ class Database:
             video_info = yt_dlp.YoutubeDL(options).extract_info(url=url, download=False)
             p = path if path != '' else self.location
 
+            if p[-1] != '/':
+                p += '/'
+
             if 'entries' in video_info:
                 directory = name if name != '' else video_info['title']
                 count = 1
