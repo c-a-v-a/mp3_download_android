@@ -178,7 +178,7 @@ class Database:
 
                 for e in video_info['entries']:
                     options['outtmpl'] = self._sanitize(f'{p}{directory}{count}. {e["title"]}.mp3')
-                    yt_dlp.YoutubeDL(options).download([video_info['webpage_url']])
+                    yt_dlp.YoutubeDL(options).download([e['webpage_url']])
                     count += 1
             else:
                 n = name if name != '' else video_info['title']
